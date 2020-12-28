@@ -26,7 +26,7 @@ def BACKUP():
     IP_LIST = open('cisco-backup-schedule-devices')
     for IP in IP_LIST:
         device = {
-            'device_type': 'cisco_device',
+            'device_type': 'cisco_ios',
             'ip':   IP,
             'username': 'admin',
             'password': 'C1sco12345',
