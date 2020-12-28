@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Este Script tem como objetivo fazer backup da configuração dos equipamentos ASAs e enviar para o seu servidor FTP
+# Este Script tem como objetivo fazer backup da configuração dos equipamentos Devices e enviar para o seu servidor FTP
 # Eh necessario instalar algumas dependencias como:
 ## pip install netmiko
 #
@@ -19,12 +19,12 @@ from netmiko import ConnectHandler
 print('Modulos Importados')
 
 # Lista dos equipamentos para fazer backup
-lista_asa = ['198.18.133.254', '198.18.133.254', '198.18.133.254']
+lista_device = ['198.18.133.254', '198.18.133.254', '198.18.133.254']
 
 # Parametro 1 pega um argumento para adicionar como nome do arquivo de backup que sera gravado
 # Checa se temos o parametro necessario para continuar
 if len(sys.argv) < 2:
-    sys.exit('ERRO: Por favor inclua um parametro apos o script para adicionar no nome do backup, exemplo * python asa-backup-v1.py 2020-12-25 *')
+    sys.exit('ERRO: Por favor inclua um parametro apos o script para adicionar no nome do backup, exemplo * python device-backup-v1.py 2020-12-25 *')
     
 param_1 = sys.argv[1]
 print('Checando o parametro fornecido ... param_1: ' + param_1)
@@ -46,8 +46,8 @@ print('Checando o parametro fornecido ... param_1: ' + param_1)
 ## Forma 3
 ## Pedir para o administrator digitar
 # Credenciais dos Firewalls
-username = input("ASAs - Por favor insira o usuario de backup:\n")
-print('Por favor insira a senha do usuario de backup do ASA:')
+username = input("Devices - Por favor insira o usuario de backup:\n")
+print('Por favor insira a senha do usuario de backup do device:')
 password = getpass.getpass()
 
 # Usuario/Senha do FTP
@@ -67,24 +67,22 @@ if (username == 'None') or (password == 'None'):
 
 
 # Looping que vai rodar todos os equipamentos especificados e fazer backup para o servidor FTP
-for asa in lista_asa:
+for device in lista_device:
 
     # Cria a sessao SSH utilizando o netmiko
-    print('Criando a conexao ssh para ' + asa)
-    device = ConnectHandler(device_type='cisco_asa', ip=asa, username=username, password=password, secret=secret)
-    print('Conexao estabelecida no equipamento ' + asa)
+    print('Criando a conexao ssh para ' + device)
+    device = ConnectHandler(device_type='cisco_device', ip=device, username=username, password=password, secret=secret)
+    print('Conexao estabelecida no equipamento ' + device)
 
     # Lista de comandos
-    print('Enviando a lista de comandos no ' + asa + '_' + param_1)
+    print('Enviando a lista de comandos no ' + device + '_' + param_1)
 #
     config_commands = [
-        'conf t',
-        'terminal width 300',
-        'copy /noconfirm running-config ftp://' + username_2 + ':' + password_2 + '@' + servidor_ftp + '/' + asa + '_' + param_1, 
+        'copy /noconfirm running-config ftp://' + username_2 + ':' + password_2 + '@' + servidor_ftp + '/' + device + '_' + param_1, 
     ]
     # Envia os comandos Cisco especificos e guarda a saida em uma variavel
     output = device.send_config_set(config_commands)
-    print('Comandos enviados para o ' + asa)
+    print('Comandos enviados para o ' + device)
 
     # Printar a saida de comandos executados
     print(output)

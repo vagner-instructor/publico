@@ -51,10 +51,6 @@ def BACKUP():
         
         #Enviando os comandos para backup e versão
         config_commands = [
-        'terminal pager 0',
-        'terminal width 300',
-        'end',
-        'more system:running-config', 
         'show run',
         'show version',
     ]
@@ -71,7 +67,7 @@ def BACKUP():
         net_connect.disconnect()
         print('Sessao ssh encerrada')
 
-schedule.every().day.at("10:30").do(BACKUP)
+schedule.every().minute.at(":00").do(BACKUP)
 #Cada empresa tem uma janela diferente e um requisito em particular, exemplos abaixo
 #schedule.every(10).minutes.do(BACKUP)
 #schedule.every().hour.do(BACKUP)
