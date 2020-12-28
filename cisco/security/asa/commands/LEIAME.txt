@@ -1,4 +1,0 @@
-Espero que ajude em alguma tarefa diaria
-Faça testes em ambiente de testes antes
-Se precisar de uma ambiente de testes fale comigo
-Não execute em seu ambiente de produção sem antes ter certeza do que está fazendo
