@@ -23,7 +23,7 @@ import schedule
 def BACKUP():
     FILETIME = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')
     TNOW = datetime.datetime.now().replace(microsecond=0)
-    IP_LIST = open('device-backup-schedule-devices')
+    IP_LIST = open('cisco-backup-schedule-devices')
     for IP in IP_LIST:
         device = {
             'device_type': 'cisco_device',
